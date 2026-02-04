@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Operación y Despliegue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <header>
+        <h1>⚙️ Operación y Despliegue</h1>
+        <p>
+            Esta sección describe cómo se opera, mantiene y despliega este sitio web
+            utilizando servicios administrados de AWS.
+        </p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Modelo operativo</h2>
+            <p>
+                El sitio funciona bajo un modelo <strong>serverless</strong>,
+                sin servidores que administrar ni sistemas operativos que mantener.
+                La operación diaria se centra en el contenido y la configuración de la CDN.
+            </p>
+            <ul>
+                <li>No existen instancias EC2 ni procesos en ejecución.</li>
+                <li>No se requieren parches de sistema operativo.</li>
+                <li>La disponibilidad es gestionada por AWS.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Despliegue</h2>
+            <p>
+                El despliegue del sitio puede automatizarse mediante un pipeline CI/CD.
+                Cada cambio en el repositorio gatilla un flujo que valida el contenido, sincroniza los archivos con
+                Amazon S3 y ejecuta una invalidación en CloudFront, asegurando que los usuarios siempre accedan a la
+                versión más reciente del sitio.
+            </p>
+        </section>
+
+        <section>
+            <h2>Flujo de despliegue</h2>
+            <p>
+                El despliegue del sitio es simple, controlado y reproducible.
+                Cualquier cambio sigue el siguiente flujo:
+            </p>
+
+            <ol>
+                <li>Edición de archivos HTML/SVG en entorno local.</li>
+                <li>Subida de archivos al bucket S3 privado.</li>
+                <li>Invalidación selectiva de caché en CloudFront.</li>
+                <li>Propagación global automática del contenido.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Control de versiones</h2>
+            <p>
+                El contenido del sitio se gestiona como archivos estáticos.
+                Los cambios son pequeños, auditables y fáciles de revertir.
+            </p>
+        </section>
+
+        <section>
+            <h2>Gestión de caché</h2>
+            <p>
+                CloudFront utiliza caché para mejorar rendimiento y reducir accesos al origen.
+                Cuando se realizan cambios, se ejecuta una invalidación manual para asegurar
+                que los usuarios reciban la versión actualizada.
+            </p>
+            <ul>
+                <li>Invalidación puntual por archivo.</li>
+                <li>No se requiere reinicio de servicios.</li>
+                <li>Propagación global en minutos.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Monitoreo y observabilidad</h2>
+            <p>
+                Al utilizar servicios administrados, la plataforma se beneficia de métricas
+                nativas de AWS.
+            </p>
+            <ul>
+                <li>Métricas de tráfico y errores en CloudFront.</li>
+                <li>Logs de acceso disponibles para auditoría.</li>
+                <li>Alta disponibilidad gestionada por AWS.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Futuras mejoras</h2>
+            <ul>
+                <li>Automatización del despliegue mediante CI/CD.</li>
+                <li>Integración con Git para control de cambios.</li>
+                <li>Implementación de AWS WAF para mayor protección.</li>
+                <li>Dominio personalizado con AWS Certificate Manager.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            Operar menos infraestructura permite enfocarse en entregar valor.
+        </p>
+    </footer>
+
+</body>
+
+</html>

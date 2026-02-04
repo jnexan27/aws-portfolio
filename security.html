@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Security & Access Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <header>
+        <h1>🔐 Seguridad y Control de Acceso</h1>
+        <p>Esta plataforma fue diseñada con un enfoque de seguridad desde el origen.</p>
+    </header>
+
+    <main>
+
+        <section>
+            <h2>Principios aplicados</h2>
+            <ul>
+                <li>El contenido no es accesible directamente desde S3.</li>
+                <li>Todo el tráfico pasa por una capa CDN (CloudFront).</li>
+                <li>El acceso público está restringido por política.</li>
+                <li>Los errores son gestionados en el edge, no en el origen.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>¿Por qué ves esta página?</h2>
+            <p>
+                Si llegaste aquí por un enlace directo o una ruta inválida,
+                significa que el sistema está funcionando correctamente.
+            </p>
+            <p>
+                El acceso a recursos internos está controlado deliberadamente
+                para reducir superficie de ataque y exposición innecesaria.
+            </p>
+        </section>
+
+        <section>
+            <h2>Arquitectura resumida</h2>
+            <ul>
+                <li>Origen privado en Amazon S3</li>
+                <li>Distribución mediante Amazon CloudFront</li>
+                <li>Control de errores y caché en CDN</li>
+                <li>HTTPS obligatorio</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Diagrama de arquitectura</h2>
+
+            <div style="background:white; padding:1rem; max-width:100%;">
+
+                <!-- SVG INLINE (AUTOCONTENIDO, FUNCIONA EN ERROR PAGES) -->
+                <svg width="600" height="420" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg"
+                    font-family="Arial, sans-serif">
+
+                    <!-- Fondo -->
+                    <rect x="0" y="0" width="600" height="420" fill="#ffffff" />
+
+                    <!-- Usuario -->
+                    <rect x="200" y="20" width="200" height="60" rx="8" fill="#e3f2fd" stroke="#1e88e5" />
+                    <text x="300" y="55" text-anchor="middle" font-size="14" fill="#0d47a1">
+                        Usuario / Navegador
+                    </text>
+
+                    <!-- Flecha 1 -->
+                    <line x1="300" y1="80" x2="300" y2="130" stroke="#555" marker-end="url(#arrow)" />
+                    <text x="310" y="115" font-size="12" fill="#555">HTTPS</text>
+
+                    <!-- CloudFront -->
+                    <rect x="160" y="130" width="280" height="90" rx="10" fill="#ede7f6" stroke="#5e35b1" />
+                    <text x="300" y="160" text-anchor="middle" font-size="14" fill="#311b92">
+                        Amazon CloudFront (CDN)
+                    </text>
+                    <text x="300" y="185" text-anchor="middle" font-size="12" fill="#311b92">
+                        Cache · HTTPS · Error Handling
+                    </text>
+
+                    <!-- Flecha 2 -->
+                    <line x1="300" y1="220" x2="300" y2="270" stroke="#555" marker-end="url(#arrow)" />
+                    <text x="310" y="255" font-size="12" fill="#555">
+                        Acceso controlado
+                    </text>
+
+                    <!-- S3 -->
+                    <rect x="170" y="270" width="260" height="90" rx="10" fill="#e8f5e9" stroke="#2e7d32" />
+                    <text x="300" y="305" text-anchor="middle" font-size="14" fill="#1b5e20">
+                        Amazon S3 (Privado)
+                    </text>
+                    <text x="300" y="330" text-anchor="middle" font-size="12" fill="#1b5e20">
+                        Sin acceso público
+                    </text>
+
+                    <!-- Definición de flecha -->
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+                        </marker>
+                    </defs>
+
+                </svg>
+
+            </div>
+
+            <p>
+                El contenido no es expuesto directamente desde el origen.
+                Todo el tráfico es gestionado en el edge para mejorar
+                seguridad, rendimiento y control.
+            </p>
+        </section>
+        <section>
+            <h2>Decisiones de diseño</h2>
+
+            <h3>Uso de Amazon S3 como origen privado</h3>
+            <p>
+                El sitio web se aloja en un bucket de Amazon S3 configurado sin acceso público.
+                Esto reduce la superficie de ataque y evita la exposición directa del contenido.
+                El bucket solo puede ser accedido a través de Amazon CloudFront mediante políticas
+                de acceso controladas.
+            </p>
+
+            <h3>Amazon CloudFront como punto de entrada</h3>
+            <p>
+                CloudFront actúa como capa de distribución, seguridad y control.
+                Todo el tráfico HTTPS termina en la CDN, permitiendo aplicar caché,
+                control de errores y futuras protecciones sin exponer el origen.
+            </p>
+
+            <h3>Separación clara entre contenido y control</h3>
+            <p>
+                El diseño separa deliberadamente la capa de almacenamiento (S3)
+                de la capa de acceso público (CloudFront).
+                Esta separación facilita la escalabilidad, el mantenimiento
+                y la evolución futura de la arquitectura.
+            </p>
+
+            <h3>Arquitectura simple y de bajo costo</h3>
+            <p>
+                Se priorizó una arquitectura sin servidores, utilizando servicios administrados.
+                Esto elimina la necesidad de mantenimiento operativo, reduce costos
+                y mejora la disponibilidad del sitio.
+            </p>
+        </section>
+
+
+    </main>
+
+    <footer>
+        <p>Security is not an accident. It’s a design decision.</p>
+    </footer>
+
+</body>
+
+</html>

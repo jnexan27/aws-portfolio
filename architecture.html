@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #ffffff;
+        }
+    </style>
+
+    <title>Arquitectura - Portafolio</title>
+    <p style="text-align:center;">
+        <img
+            src="https://img.shields.io/badge/AWS-CloudFront%20%2B%20S3-orange?style=for-the-badge&logo=amazonaws&logoColor=white">
+    </p>
+
+    <img src="architecture.png.png" style="background-color:white; padding:1rem;">
+</head>
+
+<body>
+    <h1>Arquitectura del Portafolio</h1>
+
+    <p>
+        Este sitio web fue diseñado utilizando servicios administrados de AWS,
+        priorizando simplicidad, seguridad y bajo costo.
+    </p>
+
+    <h2>Servicios utilizados</h2>
+
+    <ul>
+        <li>Amazon S3: almacenamiento del sitio web estático</li>
+        <li>Amazon CloudFront: distribución global del contenido (CDN)</li>
+        <li>AWS IAM: control de acceso entre servicios</li>
+    </ul>
+
+    <h2>Flujo de la arquitectura</h2>
+
+    <p>
+        El usuario accede al sitio a través de CloudFront usando HTTPS.
+        CloudFront obtiene el contenido desde un bucket S3 privado,
+        al cual solo él tiene acceso mediante Origin Access Control.
+    </p>
+
+    <h2>Decisiones técnicas</h2>
+
+    <ul>
+        <li>No se utilizan servidores EC2 para reducir costos y mantenimiento</li>
+        <li>El bucket S3 no es público, siguiendo el principio de mínimo privilegio</li>
+        <li>CloudFront mejora seguridad, performance y disponibilidad</li>
+    </ul>
+
+</body>
+
+</html>
