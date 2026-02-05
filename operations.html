@@ -35,10 +35,17 @@
         <section>
             <h2>Despliegue</h2>
             <p>
-                El despliegue del sitio puede automatizarse mediante un pipeline CI/CD.
-                Cada cambio en el repositorio gatilla un flujo que valida el contenido, sincroniza los archivos con
-                Amazon S3 y ejecuta una invalidación en CloudFront, asegurando que los usuarios siempre accedan a la
-                versión más reciente del sitio.
+                El proceso de despliegue se inicia al ejecutar un git push sobre la rama principal del repositorio.
+                GitHub Actions detecta el cambio y ejecuta un workflow automatizado.
+
+                Durante la ejecución, GitHub Actions se autentica en AWS mediante OIDC, asumiendo un IAM Role
+                previamente configurado con una relación de confianza restringida al repositorio y rama específicos.
+
+                El pipeline sincroniza los archivos del sitio hacia Amazon S3, que actúa como origen privado del
+                contenido.
+
+                Finalmente, Amazon CloudFront distribuye el contenido actualizado desde el edge, asegurando entrega
+                segura y eficiente a los usuarios finales.
             </p>
         </section>
 
