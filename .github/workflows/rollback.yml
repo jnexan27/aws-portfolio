@@ -1,0 +1,52 @@
+name: Rollback S3 Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      s3_bucket:
+        description: "Nombre del bucket S3"
+        required: true
+      object_key:
+        description: "Archivo a restaurar (ej: index.html)"
+        required: true
+      version_id:
+        description: "VersionId del objeto en S3"
+        required: true
+      cloudfront_distribution_id:
+        description: "ID de la distribución CloudFront"
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configurar credenciales AWS via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::736358620753:role/github-actions-s3-deploy
+          aws-region: us-east-1
+
+      - name: Restaurar versión anterior del objeto en S3
+        run: |
+          aws s3api get-object \
+            --bucket "${{ inputs.s3_bucket }}" \
+            --key "${{ inputs.object_key }}" \
+            --version-id "${{ inputs.version_id }}" \
+            restored-object
+
+          aws s3api put-object \
+            --bucket "${{ inputs.s3_bucket }}" \
+            --key "${{ inputs.object_key }}" \
+            --body restored-object \
+            --content-type text/html
+
+      - name: Invalidar caché de CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ inputs.cloudfront_distribution_id }}" \
+            --paths "/*"
