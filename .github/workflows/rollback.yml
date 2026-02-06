@@ -1,4 +1,4 @@
-name: Rollback S3 Deployment
+name: Rollback S3 Deployment (Auto Previous Version)
 
 on:
   workflow_dispatch:
@@ -8,9 +8,6 @@ on:
         required: true
       object_key:
         description: "Archivo a restaurar (ej: index.html)"
-        required: true
-      version_id:
-        description: "VersionId del objeto en S3"
         required: true
       cloudfront_distribution_id:
         description: "ID de la distribución CloudFront"
@@ -31,12 +28,28 @@ jobs:
           role-to-assume: arn:aws:iam::736358620753:role/github-actions-s3-deploy
           aws-region: us-east-1
 
-      - name: Restaurar versión anterior del objeto en S3
+      - name: Obtener versión anterior del objeto
+        id: get_version
+        run: |
+          VERSION_ID=$(aws s3api list-object-versions \
+            --bucket "${{ inputs.s3_bucket }}" \
+            --prefix "${{ inputs.object_key }}" \
+            --query 'Versions[?IsLatest==`false`]|[0].VersionId' \
+            --output text)
+
+          if [ "$VERSION_ID" = "None" ] || [ -z "$VERSION_ID" ]; then
+            echo "No se encontró una versión anterior"
+            exit 1
+          fi
+
+          echo "version_id=$VERSION_ID" >> $GITHUB_OUTPUT
+
+      - name: Restaurar versión anterior en S3
         run: |
           aws s3api get-object \
             --bucket "${{ inputs.s3_bucket }}" \
             --key "${{ inputs.object_key }}" \
-            --version-id "${{ inputs.version_id }}" \
+            --version-id "${{ steps.get_version.outputs.version_id }}" \
             restored-object
 
           aws s3api put-object \
