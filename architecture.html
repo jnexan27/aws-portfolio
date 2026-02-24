@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Arquitectura - Portafolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Detalles de la arquitectura serverless del portafolio, utilizando AWS S3 y CloudFront.">
+    <title>Arquitectura | Portafolio Jesus Manzanilla</title>
 
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <link rel="stylesheet" href="styles/custom.css">
@@ -11,43 +14,54 @@
 
 <body>
 
-    <div class="badge">
-        <img src="https://img.shields.io/badge/AWS-CloudFront%20%2B%20S3-orange?style=for-the-badge&logo=amazonaws&logoColor=white"
-            alt="AWS CloudFront + S3">
-    </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="architecture.html">Arquitectura</a></li>
+                <li><a href="operations.html">Operación</a></li>
+            </ul>
+        </nav>
+        <h1>Arquitectura del Portafolio</h1>
+    </header>
 
-    <img src="architecture.png" class="architecture-img" alt="Diagrama de arquitectura AWS">
+    <main>
 
-    <h1>Arquitectura del Portafolio</h1>
+        <div class="badge">
+            <img src="https://img.shields.io/badge/AWS-CloudFront%20%2B%20S3-orange?style=for-the-badge&logo=amazonaws&logoColor=white"
+                alt="AWS CloudFront + S3">
+        </div>
 
-    <p>
-        Este sitio web fue diseñado utilizando servicios administrados de AWS,
-        priorizando simplicidad, seguridad y bajo costo.
-    </p>
+        <img src="architecture.png" class="architecture-img" alt="Diagrama de arquitectura AWS">
 
-    <h2>Servicios utilizados</h2>
+        <p>
+            Este sitio web fue diseñado utilizando servicios administrados de AWS,
+            priorizando simplicidad, seguridad y bajo costo.
+        </p>
 
-    <ul>
-        <li>Amazon S3: almacenamiento del sitio web estático</li>
-        <li>Amazon CloudFront: distribución global del contenido (CDN)</li>
-        <li>AWS IAM: control de acceso entre servicios</li>
-    </ul>
+        <h2>Servicios utilizados</h2>
 
-    <h2>Flujo de la arquitectura</h2>
+        <ul>
+            <li>Amazon S3: almacenamiento del sitio web estático</li>
+            <li>Amazon CloudFront: distribución global del contenido (CDN)</li>
+            <li>AWS IAM: control de acceso entre servicios</li>
+        </ul>
 
-    <p>
-        El usuario accede al sitio a través de CloudFront usando HTTPS.
-        CloudFront obtiene el contenido desde un bucket S3 privado,
-        al cual solo él tiene acceso mediante Origin Access Control.
-    </p>
+        <h2>Flujo de la arquitectura</h2>
 
-    <h2>Decisiones técnicas</h2>
+        <p>
+            El usuario accede al sitio a través de CloudFront usando HTTPS.
+            CloudFront obtiene el contenido desde un bucket S3 privado,
+            al cual solo él tiene acceso mediante Origin Access Control.
+        </p>
 
-    <ul>
-        <li>No se utilizan servidores EC2 para reducir costos y mantenimiento</li>
-        <li>El bucket S3 no es público, siguiendo el principio de mínimo privilegio</li>
-        <li>CloudFront mejora seguridad, performance y disponibilidad</li>
-    </ul>
+        <h2>Decisiones técnicas</h2>
+
+        <ul>
+            <li>No se utilizan servidores EC2 para reducir costos y mantenimiento</li>
+            <li>El bucket S3 no es público, siguiendo el principio de mínimo privilegio</li>
+            <li>CloudFront mejora seguridad, performance y disponibilidad</li>
+        </ul>
 
 </body>
 
