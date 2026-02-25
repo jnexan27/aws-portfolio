@@ -58,3 +58,34 @@
             margin: 0 auto 2rem auto;
             max-width: 100%;
         }
+
+        .github-link-container {
+            text-align: center;
+            margin-top: 2rem;
+            padding-bottom: 3rem;
+        }
+
+        .github-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #24292f;
+            color: #ffffff !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s, transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .github-button:hover {
+            background-color: #31363c;
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .github-button svg {
+            margin-right: 0.5rem;
+            fill: currentColor;
+        }
