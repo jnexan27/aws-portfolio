@@ -39,5 +39,5 @@ jobs:
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id E1P0T6O3SNZWZ8 \
+            --distribution-id E1NIULGIURD35O \
             --paths "/*"
