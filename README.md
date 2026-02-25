@@ -50,9 +50,9 @@ El proyecto utiliza un enfoque moderno de infraestructura como código y servici
 ## 👤 Autor
 
 **Jesus Manzanilla**
-*DevOps en entrenamiento | Especialista en AWS*
-- [LinkedIn](https://www.linkedin.com/in/tu-perfil) (Opcional: actualiza este enlace)
-- [Portfolio Web](https://tu-dominio.com) (Opcional: actualiza este enlace)
+*DevOps | Especialista en AWS*
+
+
 
 ---
 *Este proyecto es parte de mi camino de aprendizaje como DevOps Engineer.*
