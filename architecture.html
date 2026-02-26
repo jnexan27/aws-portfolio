@@ -58,9 +58,15 @@
         <h2>Decisiones técnicas</h2>
 
         <ul>
-            <li>No se utilizan servidores EC2 para reducir costos y mantenimiento</li>
-            <li>El bucket S3 no es público, siguiendo el principio de mínimo privilegio</li>
-            <li>CloudFront mejora seguridad, performance y disponibilidad</li>
+            <li>La infraestructura se gestiona como código (IaC) utilizando <strong>Terraform</strong>, garantizando
+                despliegues consistentes y reproducibles.</li>
+            <li><strong>Remote State y State Locking:</strong> El estado de Terraform se almacena de forma segura en un
+                bucket de <strong>Amazon S3</strong> con versionamiento, y las operaciones concurrentes se bloquean
+                utilizando una tabla de <strong>Amazon DynamoDB</strong> para evitar corrupción del estado.</li>
+            <li>No se utilizan servidores EC2 para reducir costos y mantenimiento.</li>
+            <li>El bucket S3 principal no es público, siguiendo el principio de mínimo privilegio (restringido vía OAC).
+            </li>
+            <li>CloudFront mejora seguridad, performance y disponibilidad global.</li>
         </ul>
 
 </body>

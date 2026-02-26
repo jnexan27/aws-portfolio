@@ -32,6 +32,7 @@ El proyecto utiliza un enfoque moderno de infraestructura como código y servici
 
 - **Frontend**: HTML5, Vanilla CSS, Simple.css.
 - **Infraestructura**: AWS (S3, CloudFront, IAM).
+- **IaC (Infraestructura como Código)**: Terraform (proveedor de AWS).
 - **CI/CD**: GitHub Actions.
 - **Control de Versiones**: Git & GitHub.
 
@@ -39,11 +40,19 @@ El proyecto utiliza un enfoque moderno de infraestructura como código y servici
 
 ## 📖 Cómo desplegar este proyecto
 
-1. **Prerrequisitos**: Cuenta de AWS y repositorio en GitHub.
-2. **Setup AWS**: Crear un bucket S3 y una distribución de CloudFront.
-3. **IAM**: Configurar un OIDC Identity Provider para GitHub en tu cuenta de AWS.
-4. **Secrets**: Añadir `AWS_ROLE_ARN` a los Secrets de tu repositorio.
-5. **Git Push**: Al hacer push a `main`, el workflow `.github/workflows/deploy.yml` se activará automáticamente.
+### 1. Despliegue de Infraestructura (Terraform)
+La infraestructura está definida como código en la carpeta `/terraform`.
+
+1. Instala [Terraform](https://developer.hashicorp.com/terraform/downloads) y configura tus credenciales de AWS localmente (`aws configure`).
+2. Entra al directorio: `cd terraform`
+3. Inicializa el proyecto: `terraform init`
+4. Revisa los cambios propuestos: `terraform plan`
+5. Aplica los cambios en AWS: `terraform apply`
+
+### 2. Despliegue del Frontend (CI/CD)
+1. **GitHub Actions**: Al hacer push a la rama `main`, el workflow se conectará vía OIDC asumiendo el rol adecuado.
+2. Sincronizará el HTML y CSS al S3 creado por Terraform.
+3. Invalidará la caché de CloudFront automáticamente.
 
 ---
 
