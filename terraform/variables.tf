@@ -15,3 +15,9 @@ variable "domain_name" {
   type        = list(string)
   default     = []
 }
+
+variable "contact_email" {
+  description = "Correo electrónico donde recibirás los mensajes del formulario de contacto"
+  type        = string
+  default     = "jnexan20@gmail.com" # ¡CAMBIAR POR TU CORREO REAL!
+}
