@@ -42,6 +42,26 @@
             <li>Linux y Windows Server</li>
         </ul>
 
+        <h3>Contacto</h3>
+        <p>¿Tienes alguna consulta o proyecto en mente? ¡Escríbeme!</p>
+        <form id="contactForm" class="contact-form">
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required placeholder="Tu nombre" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="tu@email.com" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="message">Mensaje:</label>
+                <textarea id="message" name="message" rows="4" required
+                    placeholder="¿En qué puedo ayudarte?"></textarea>
+            </div>
+            <button type="submit" id="submitBtn">Enviar Mensaje</button>
+            <p id="formStatus" class="form-status"></p>
+        </form>
+
         <div class="github-link-container">
             <a href="https://github.com/jnexan27/aws-portfolio" target="_blank" class="github-button">
                 <svg height="20" width="20" viewBox="0 0 16 16">
@@ -53,6 +73,49 @@
             </a>
         </div>
     </main>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submitBtn');
+            const statusText = document.getElementById('formStatus');
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+            statusText.innerText = '';
+            statusText.className = 'form-status';
+
+            try {
+                const response = await fetch('https://jxek4dnyb3.execute-api.us-east-1.amazonaws.com/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, message })
+                });
+
+                if (response.ok) {
+                    statusText.innerText = '¡Mensaje enviado exitosamente!';
+                    statusText.classList.add('success');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    statusText.innerText = 'Hubo un error al enviar el mensaje. Inténtalo más tarde.';
+                    statusText.classList.add('error');
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                statusText.innerText = 'Hubo un error de conexión.';
+                statusText.classList.add('error');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Enviar Mensaje';
+            }
+        });
+    </script>
 </body>
 
 </html>

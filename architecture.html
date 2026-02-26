@@ -42,17 +42,29 @@
         <h2>Servicios utilizados</h2>
 
         <ul>
-            <li>Amazon S3: almacenamiento del sitio web estático</li>
-            <li>Amazon CloudFront: distribución global del contenido (CDN)</li>
-            <li>AWS IAM: control de acceso entre servicios</li>
+            <li><strong>Amazon S3</strong>: Almacenamiento del sitio web estático y backend remoto del estado de
+                Terraform.</li>
+            <li><strong>Amazon CloudFront</strong>: Distribución global del contenido (CDN) con HTTPS forzado.</li>
+            <li><strong>AWS IAM</strong>: Control de acceso entre servicios con el principio de mínimo privilegio.</li>
+            <li><strong>Amazon API Gateway</strong>: Punto de entrada HTTPS público para la función de contacto
+                (formulario web).</li>
+            <li><strong>AWS Lambda</strong>: Función serverless (Node.js) que procesa los mensajes del formulario y los
+                envía a SNS.</li>
+            <li><strong>Amazon SNS</strong>: Servicio de notificaciones que entrega los mensajes del formulario
+                directamente al correo del propietario.</li>
+            <li><strong>Amazon DynamoDB</strong>: Tabla de State Locking para prevenir corrupción del estado de
+                Terraform.</li>
         </ul>
 
         <h2>Flujo de la arquitectura</h2>
 
         <p>
-            El usuario accede al sitio a través de CloudFront usando HTTPS.
-            CloudFront obtiene el contenido desde un bucket S3 privado,
-            al cual solo él tiene acceso mediante Origin Access Control.
+            El usuario accede al sitio a través de <strong>CloudFront</strong> usando HTTPS.
+            CloudFront obtiene el contenido estático desde un bucket <strong>S3 privado</strong> mediante Origin Access
+            Control.<br><br>
+            Cuando el usuario envía el formulario de contacto, el navegador hace un POST a <strong>API Gateway</strong>,
+            que invoca una función <strong>Lambda</strong> en Node.js. La Lambda publica el mensaje en un
+            <strong>Topic de SNS</strong>, que lo entrega al correo del propietario en tiempo real.
         </p>
 
         <h2>Decisiones técnicas</h2>
@@ -63,6 +75,9 @@
             <li><strong>Remote State y State Locking:</strong> El estado de Terraform se almacena de forma segura en un
                 bucket de <strong>Amazon S3</strong> con versionamiento, y las operaciones concurrentes se bloquean
                 utilizando una tabla de <strong>Amazon DynamoDB</strong> para evitar corrupción del estado.</li>
+            <li><strong>Backend Serverless (Contact API):</strong> El formulario de contacto utiliza <strong>API
+                    Gateway</strong> + <strong>Lambda</strong> + <strong>SNS</strong> sin servidores que administrar.
+                Costo: $0 dentro del free tier.</li>
             <li>No se utilizan servidores EC2 para reducir costos y mantenimiento.</li>
             <li>El bucket S3 principal no es público, siguiendo el principio de mínimo privilegio (restringido vía OAC).
             </li>
